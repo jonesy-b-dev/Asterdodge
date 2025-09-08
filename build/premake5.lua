@@ -24,12 +24,23 @@ end
 function check_raylib()
     os.chdir("external")
     if(os.isdir("raylib-master") == false) then
+		--print("Downloading raylib via curl...")
+		--local ok = os.execute("curl -L -o raylib-master.zip https://github.com/raysan5/raylib/archive/refs/heads/master.zip")
+		--print(ok)
+		--if ok ~= true then
+		--	error("Failed to download raylib via curl")
+		--end
+
         if(not os.isfile("raylib-master.zip")) then
             print("Raylib not found, downloading from github")
             local result_str, response_code = http.download("https://github.com/raysan5/raylib/archive/refs/heads/master.zip", "raylib-master.zip", {
                 progress = download_progress,
                 headers = { "From: Premake", "Referer: Premake" }
             })
+			if result_str ~= "OK" or response_code ~= 200 then
+                error("Failed to download raylib (code: " .. tostring(response_code) ..
+                      ", msg: " .. tostring(result_str) .. ")")
+			end
         end
         print("Unzipping to " ..  os.getcwd())
         zip.extract("raylib-master.zip", os.getcwd())

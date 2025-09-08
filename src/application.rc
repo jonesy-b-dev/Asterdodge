@@ -9,13 +9,13 @@ BEGIN
     //BLOCK "080904E4"  // English UK
     BLOCK "040904E4"    // English US
     BEGIN
-      //VALUE "CompanyName", "raylib technologies"
-      VALUE "FileDescription", "A cool game made with raylib (www.raylib.com)"
+      VALUE "CompanyName", "Jonesy B Productions"
+      VALUE "FileDescription", "First semester project game"
       VALUE "FileVersion", "1.0.0"
-      VALUE "InternalName", "cool game"
-      VALUE "LegalCopyright", "(c) 2025 YOUR NAME"
+      VALUE "InternalName", "Asterdodge"
+      VALUE "LegalCopyright", "(c) 2025 Jonesy B"
       //VALUE "OriginalFilename", "raylib_app"
-      VALUE "ProductName", "A cool game"
+      VALUE "ProductName", "Asterdodge"
       VALUE "ProductVersion", "1.0.0"
     END
   END
