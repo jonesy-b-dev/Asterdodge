@@ -1,9 +1,11 @@
 #include "game.h"
 #include "raylib.h"
-#include "../../include/resource_dir.h"	// utility header for SearchAndSetResourceDir
+#include <resource_dir.h>
+#include <player/player.h>
+#include <entity/entity.h>
 
 // Load a texture from the resources directory
-Texture wabbit;
+Player player;
 
 int InitGame(GameOptions options)
 {
@@ -16,7 +18,9 @@ int InitGame(GameOptions options)
 		return false;
 	};
 	// Load a texture from the resources directory
-	wabbit = LoadTexture("wabbit_alpha.png");
+	SetEntityTexture(&player.base, "wabbit_alpha.png");
+	player.base.pos = (Vector2){200, 200};
+
 	return true;
 }
 
@@ -34,9 +38,8 @@ int RunGame()
 		// draw some text using the default font
 		DrawText("Hello Raylib", 200,200,20,WHITE);
 
-		// draw our texture to the screen
-		DrawTexture(wabbit, 400, 200, WHITE);
-		
+		RenderEntity(player.base);
+
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();
 	}
@@ -48,7 +51,7 @@ int RunGame()
 int ShutdownGame()
 {
 	// cleanup
-	UnloadTexture(wabbit);
+	UnloadTexture(player.base.sprite);
 
 	CloseWindow();
 	return true;
