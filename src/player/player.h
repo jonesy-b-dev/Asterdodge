@@ -8,3 +8,4 @@ typedef struct
 } Player;
 
 void RotatePlayerToMouse(Player* player);
+void PlayerMove(Player* player);
