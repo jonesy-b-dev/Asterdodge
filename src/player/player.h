@@ -6,3 +6,5 @@ typedef struct
 	Entity base;
 	float health;
 } Player;
+
+void RotatePlayerToMouse(Player* player);

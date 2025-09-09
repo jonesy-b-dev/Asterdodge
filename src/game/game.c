@@ -4,7 +4,6 @@
 #include <player/player.h>
 #include <entity/entity.h>
 
-// Load a texture from the resources directory
 Player player;
 
 int InitGame(GameOptions options)
@@ -17,7 +16,8 @@ int InitGame(GameOptions options)
 	{
 		return false;
 	};
-	// Load a texture from the resources directory
+	
+	// Setup player
 	SetEntityTexture(&player.base, "wabbit_alpha.png");
 	player.base.pos = (Vector2){200, 200};
 
@@ -35,9 +35,7 @@ int RunGame()
 		// Setup the back buffer for drawing (clear color and depth buffers)
 		ClearBackground(BLACK);
 
-		// draw some text using the default font
-		DrawText("Hello Raylib", 200,200,20,WHITE);
-
+		RotatePlayerToMouse(&player);
 		RenderEntity(player.base);
 
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)

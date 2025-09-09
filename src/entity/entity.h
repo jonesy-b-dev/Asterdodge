@@ -6,6 +6,7 @@ typedef struct {
 	Vector2 pos;
 	Vector2 vel;
 	Texture2D sprite;
+	float angle;
 	//float   radius;   // for simple circle collision
 	bool    active;   // true if currently in use
 } Entity;

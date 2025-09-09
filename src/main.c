@@ -1,18 +1,14 @@
-#include "game/game.h"
-#include "utils.h"
+#include <game/game.h>
 
-int main ()
+int main()
 {
-	GameOptions options = { 
-		.resourceDirectory = "resources",
-		.windowName = "Asterdodge",
-		.windowHeight = 600,
-		.windowWidth = 1000
-	};
+    GameOptions options = {.resourceDirectory = "resources",
+                           .windowName = "Asterdodge",
+                           .windowHeight = 600,
+                           .windowWidth = 1000};
+    InitGame(options);
 
-	InitGame(options);
-	
-	RunGame();	
+    RunGame();
 
-	return 0;
+    return 0;
 }

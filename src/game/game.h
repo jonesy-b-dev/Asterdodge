@@ -1,5 +1,5 @@
 #pragma once
-#include "../utils/gameoptions.h"
+#include <utils/gameUtils.h>>
 
 int InitGame(GameOptions options);
 
