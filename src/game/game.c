@@ -21,12 +21,12 @@ int InitGame(GameOptions options)
 
 	// Setup player
 	SetEntityTexture(&player.base, "wabbit_alpha.png");
-	player.base.pos = (Vector2){options.windowWidth / 2, options.windowHeight / 2};
+	player.base.pos = (Vector2){options.windowWidth / 2.0f, options.windowHeight / 2.0f};
 	player.base.active = true;
 	player.base.name = "Player";
 
 	// Setup asteroid spawner
-	Asteroid* asteroidPool = InitializeAsteroids(options.asteroidPoolSize);
+    InitializeAsteroids(options.asteroidPoolSize);
 
 	return true;
 }
@@ -56,14 +56,18 @@ int RunGame(GameOptions options)
 		EndDrawing();
 	}
 
-	ShutdownGame();
+	ShutdownGame(options);
 	return true;
 }
 
-int ShutdownGame()
+int ShutdownGame(GameOptions options)
 {
 	// cleanup
 	UnloadTexture(player.base.sprite);
+    for (int i = 0; i < options.asteroidPoolSize; i++)
+    {
+    	UnloadTexture(asteroidPool[i].base.sprite);
+    }
 
 	CloseWindow();
 	return true;

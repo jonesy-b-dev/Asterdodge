@@ -5,4 +5,4 @@ int InitGame(GameOptions options);
 
 int RunGame(GameOptions options);
 
-int ShutdownGame();
+int ShutdownGame(GameOptions options);

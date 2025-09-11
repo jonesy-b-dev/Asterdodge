@@ -1,5 +1,6 @@
 #pragma once
 #include <entity/entity.h>
+#include <utils/gameUtils.h>
 
 typedef struct
 {
@@ -13,7 +14,7 @@ extern Asteroid *asteroidPool;
 Asteroid *InitializeAsteroids(int asteroidAmount);
 
 // Moves asteroids from non active to the active pool
-int SpawnAsteroids();
+int SpawnAsteroids(GameOptions options);
 
 void AsteroidDeath();
 
