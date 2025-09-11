@@ -3,6 +3,7 @@
 #include <stdbool.h>
 
 typedef struct {
+	const char* name;
 	Vector2 pos;
 	Vector2 vel;
 	Texture2D sprite;

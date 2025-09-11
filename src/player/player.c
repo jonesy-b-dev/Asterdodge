@@ -27,4 +27,6 @@ void PlayerMove(Player *player)
         player->base.pos.y -= 2.0f;
     if (IsKeyDown(KEY_S))
         player->base.pos.y += 2.0f;
+    if (IsKeyPressed(KEY_P))
+        player->base.active = !player->base.active;
 }

@@ -18,11 +18,11 @@
       "-std=c17",
       "-c",
       "-o",
-      "obj/x64/Debug/asterdodge/player.o",
-      "../../src/player/player.c"
+      "obj/x64/Debug/asterdodge/game.o",
+      "../../src/game/game.c"
     ],
     "directory": "/home/jonesy/dev/c/asterdodge/build/build_files",
-    "file": "/home/jonesy/dev/c/asterdodge/src/player/player.c",
-    "output": "/home/jonesy/dev/c/asterdodge/build/build_files/obj/x64/Debug/asterdodge/player.o"
+    "file": "/home/jonesy/dev/c/asterdodge/src/game/game.c",
+    "output": "/home/jonesy/dev/c/asterdodge/build/build_files/obj/x64/Debug/asterdodge/game.o"
   }
 ]

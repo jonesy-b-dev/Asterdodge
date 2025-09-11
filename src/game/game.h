@@ -3,6 +3,6 @@
 
 int InitGame(GameOptions options);
 
-int RunGame();
+int RunGame(GameOptions options);
 
 int ShutdownGame();

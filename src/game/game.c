@@ -3,8 +3,10 @@
 #include <resource_dir.h>
 #include <player/player.h>
 #include <entity/entity.h>
+#include <asteroid/asteroid.h>
 
-Player player;
+Player player; // TODO better initialzation
+
 
 int InitGame(GameOptions options)
 {
@@ -16,15 +18,20 @@ int InitGame(GameOptions options)
 	{
 		return false;
 	};
-	
+
 	// Setup player
 	SetEntityTexture(&player.base, "wabbit_alpha.png");
-	player.base.pos = (Vector2){200, 200};
+	player.base.pos = (Vector2){options.windowWidth / 2, options.windowHeight / 2};
+	player.base.active = true;
+	player.base.name = "Player";
+
+	// Setup asteroid spawner
+	Asteroid* asteroidPool = InitializeAsteroids(options.asteroidPoolSize);
 
 	return true;
 }
 
-int RunGame()
+int RunGame(GameOptions options)
 {
 	// game loop
 	while (!WindowShouldClose())		
@@ -35,11 +42,17 @@ int RunGame()
 		// Setup the back buffer for drawing (clear color and depth buffers)
 		ClearBackground(BLACK);
 
+		SpawnAsteroids(options);
+
 		RotatePlayerToMouse(&player);
 		PlayerMove(&player);
 		RenderEntity(player.base);
 
-		// end the frame and get ready for the next one  (display frame, poll input, etc...)
+        for (int i = 0; i < options.asteroidPoolSize; i++)
+		{
+			RenderEntity(asteroidPool[i].base);
+		}
+
 		EndDrawing();
 	}
 
