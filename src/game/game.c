@@ -62,13 +62,10 @@ int RunGame(GameOptions options)
 
 int ShutdownGame(GameOptions options)
 {
-	// cleanup
-	UnloadTexture(player.base.sprite);
-    for (int i = 0; i < options.asteroidPoolSize; i++)
-    {
-    	UnloadTexture(asteroidPool[i].base.sprite);
-    }
+    // cleanup
+    UnloadTexture(player.base.sprite);
+    UnloadTexture(asteroidPool[1].base.sprite);
 
-	CloseWindow();
-	return true;
+    CloseWindow();
+    return true;
 }

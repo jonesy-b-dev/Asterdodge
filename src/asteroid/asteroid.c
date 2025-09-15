@@ -18,12 +18,14 @@ Asteroid *InitializeAsteroids(int asteroidAmount)
         return NULL;
     }
 
+	Texture2D asteroidSprite = LoadTexture("Asteroid.png");
+
     for (int i = 0; i < asteroidAmount; i++)
     {
         asteroidPool[i].base.active = false;
         asteroidPool[i].defaultLocation = (Vector2){10000.0f, 10000.0f};
         asteroidPool[i].base.pos = asteroidPool[i].defaultLocation;
-        asteroidPool[i].base.sprite = LoadTexture("Asteroid.png");
+        asteroidPool[i].base.sprite = asteroidSprite;
         asteroidPool[i].base.name = "Asteroid";
     }
 
