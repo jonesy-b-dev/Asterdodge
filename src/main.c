@@ -6,7 +6,7 @@ int main()
                            .windowName = "Asterdodge",
                            .windowHeight = 600,
                            .windowWidth = 1000,
-						   .asteroidPoolSize = 100};
+			   .asteroidPoolSize = 100};
     InitGame(options);
 
     RunGame(options);
