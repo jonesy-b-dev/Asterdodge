@@ -4,7 +4,7 @@
 
 typedef struct
 {
-    const char *name;
+    const char* name;
     Vector2 pos;
     Vector2 vel;
     Texture2D sprite;
@@ -13,5 +13,5 @@ typedef struct
     bool active; // true if currently in use
 } Entity;
 
-void SetEntityTexture(Entity *entitiy, const char *filename);
-void RenderEntity(Entity entitiy, float scale);
+void SetEntityTexture(Entity* entitiy, const char* filename);
+void RenderEntity(Entity* entitiy, float scale);

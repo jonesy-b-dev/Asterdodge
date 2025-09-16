@@ -47,11 +47,12 @@ int RunGame(GameOptions options)
 
         RotatePlayerToMouse(&player);
         PlayerMove(&player);
-        RenderEntity(player.base, 1.2);
+        RenderEntity(&player.base, 1.2);
 
         for (int i = 0; i < options.asteroidPoolSize; i++)
         {
-            RenderEntity(asteroidPool[i].base, 0.5);
+            RenderEntity(&asteroidPool[i].base, 0.5);
+	    MoveAsteroidTowardsPlayer(&asteroidPool[i], &player);
         }
 
         EndDrawing();
