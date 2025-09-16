@@ -6,7 +6,7 @@ void SetEntityTexture(Entity *entitiy, const char *filename)
     entitiy->sprite = LoadTexture("wabbit_alpha.png");
 }
 
-void RenderEntity(Entity entity)
+void RenderEntity(Entity entity, float scale)
 {
     if (!entity.active)
         return;
@@ -18,10 +18,11 @@ void RenderEntity(Entity entity)
 
     Rectangle dstRec = {.x = entity.pos.x - srcRec.width / 2.0f,
                         .y = entity.pos.y - srcRec.height / 2.0f,
-                        .width = srcRec.width, // keep original size (scale = 1)
-                        .height = srcRec.height};
+                        .width = srcRec.width * scale,
+                        .height = srcRec.height * scale};
 
-    Vector2 origin = {srcRec.width / 2.0f, srcRec.height / 2.0f};
+    Vector2 origin = {srcRec.width * scale / 2.0f,
+                      srcRec.height * scale / 2.0f};
 
     // draw our texture to the screen
     // DrawTextureEx(entity.sprite, entity.pos, RAD2DEG * entity.angle, 1,
