@@ -24,6 +24,7 @@ int InitGame(GameOptions options)
         (Vector2){options.windowWidth / 2.0f, options.windowHeight / 2.0f};
     player.base.active = true;
     player.base.name = "Player";
+    player.speed = 100;
 
     // Setup asteroid spawner
     InitializeAsteroids(options.asteroidPoolSize);

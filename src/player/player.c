@@ -20,13 +20,11 @@ void RotatePlayerToMouse(Player *player)
 void PlayerMove(Player *player)
 {
     if (IsKeyDown(KEY_D))
-        player->base.pos.x += 2.0f;
+        player->base.pos.x += player->speed * GetFrameTime();
     if (IsKeyDown(KEY_A))
-        player->base.pos.x -= 2.0f;
+        player->base.pos.x -= player->speed * GetFrameTime();
     if (IsKeyDown(KEY_W))
-        player->base.pos.y -= 2.0f;
+        player->base.pos.y -= player->speed * GetFrameTime();
     if (IsKeyDown(KEY_S))
-        player->base.pos.y += 2.0f;
-    if (IsKeyPressed(KEY_P))
-        player->base.active = !player->base.active;
+        player->base.pos.y += player->speed * GetFrameTime();
 }
