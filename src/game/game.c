@@ -20,8 +20,7 @@ int InitGame(GameOptions options)
 
     // Setup player
     SetEntityTexture(&player.base, "wabbit_alpha.png");
-    player.base.pos =
-        (Vector2){options.windowWidth / 2.0f, options.windowHeight / 2.0f};
+    player.base.pos = (Vector2){options.windowWidth / 2.0f, options.windowHeight / 2.0f};
     player.base.active = true;
     player.base.name = "Player";
     player.speed = 100;
@@ -52,7 +51,7 @@ int RunGame(GameOptions options)
         for (int i = 0; i < options.asteroidPoolSize; i++)
         {
             RenderEntity(&asteroidPool[i].base, 0.5);
-	    MoveAsteroidTowardsPlayer(&asteroidPool[i], &player);
+            MoveAsteroidTowardsPlayer(&asteroidPool[i], &player);
         }
 
         EndDrawing();

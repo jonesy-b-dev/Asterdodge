@@ -33,6 +33,37 @@ Asteroid* InitializeAsteroids(int asteroidAmount)
     return asteroidPool;
 }
 
+Vector2 CalculateSpawnLocation(GameOptions options)
+{
+    // This value is the side of the screen the asteroid will spawn in
+    // 1 = top
+    // 2 = bottom
+    // 3 = left
+    // 4 = right
+    int screenSide = GetRandomValue(1, 4);
+    printf("%i", screenSide);
+    switch (screenSide)
+    {
+    case 1:
+        return (Vector2){GetRandomValue(0, options.windowWidth), GetRandomValue(-300, 0)};
+        break;
+    case 2:
+        return (Vector2){GetRandomValue(0, options.windowWidth),
+                         GetRandomValue(options.windowHeight + 300, options.windowHeight)};
+        break;
+    case 3:
+        return (Vector2){GetRandomValue(-300, 0), GetRandomValue(0, options.windowHeight)};
+        break;
+    case 4:
+        return (Vector2){GetRandomValue(options.windowWidth + 300, options.windowWidth),
+                         GetRandomValue(0, options.windowHeight)};
+        break;
+    default:
+        return (Vector2){options.windowWidth / 2.0f, options.windowHeight / 2.0f};
+        break;
+    }
+}
+
 int SpawnAsteroids(GameOptions options)
 {
     int result = GetRandomValue(1, 1000);
@@ -54,9 +85,11 @@ int SpawnAsteroids(GameOptions options)
             {
                 foundNonActive = true;
                 asteroidPool[i].base.active = true;
-                Vector2 spawnPosition = {
-                    GetRandomValue(1, options.windowWidth),
-                    GetRandomValue(1, options.windowHeight)};
+                Vector2 spawnPosition = CalculateSpawnLocation(options);
+                printf("Spawn Location: x: ");
+                printf("%f", spawnPosition.x);
+                printf("\n y: ");
+                printf("%f", spawnPosition.y);
 
                 asteroidPool[i].base.pos = spawnPosition;
                 asteroidPool[i].speed = 100;
