@@ -25,6 +25,8 @@ int InitGame(GameOptions options)
     player.base.active = true;
     player.base.name = "Player";
     player.speed = 100;
+	player.health = 100;
+	player.isDead = false;
 
     // Setup asteroid spawner
     InitializeAsteroids(options.asteroidPoolSize);
@@ -64,6 +66,7 @@ int RunGame(GameOptions options)
             {
                 printf("Hit player\n");
 				AsteroidDeath(i);
+				PlayerTakeDamage(&player, 50);
             }
         }
 

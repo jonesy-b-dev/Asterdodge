@@ -1,9 +1,13 @@
 #include "raylib.h"
 #include <math.h>
 #include <player/player.h>
+#include <stdio.h>
 
-void RotatePlayerToMouse(Player *player)
+void RotatePlayerToMouse(Player* player)
 {
+    if (player->isDead)
+        return;
+
     Vector2 mousePos = GetMousePosition();
 
     // Vector from player to mouse
@@ -17,8 +21,11 @@ void RotatePlayerToMouse(Player *player)
     player->base.angle = atan2f(dir.y, dir.x);
 }
 
-void PlayerMove(Player *player)
+void PlayerMove(Player* player)
 {
+    if (player->isDead)
+        return;
+
     if (IsKeyDown(KEY_D))
         player->base.pos.x += player->speed * GetFrameTime();
     if (IsKeyDown(KEY_A))
@@ -27,4 +34,12 @@ void PlayerMove(Player *player)
         player->base.pos.y -= player->speed * GetFrameTime();
     if (IsKeyDown(KEY_S))
         player->base.pos.y += player->speed * GetFrameTime();
+}
+
+void PlayerTakeDamage(Player* player, float damage)
+{
+    player->health -= damage;
+    printf("Player health: %f \n", player->health);
+    if (player->health <= 0)
+        player->isDead = true;
 }
