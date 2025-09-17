@@ -1,6 +1,6 @@
 #include "entity.h"
 #include "raylib.h"
-#include <string.h>
+#include <stdbool.h>
 
 void SetEntityTexture(Entity* entitiy, const char* filename)
 {
@@ -11,27 +11,24 @@ void RenderEntity(Entity* entity, float scale)
 {
     if (!entity->active)
         return;
-    if (strcmp(entity->name, "Asteroid") == 0)
-    {
-        int x = 5;
-    }
 
-    Rectangle srcRec = {.x = 0,
-                        .y = 0,
-                        .width = (float)entity->sprite.width,
-                        .height = (float)entity->sprite.height};
+    entity->srcRec = (Rectangle){.x = 0,
+                                 .y = 0,
+                                 .width = (float)entity->sprite.width,
+                                 .height = (float)entity->sprite.height};
 
-    Rectangle dstRec = {.x      = entity->pos.x - (srcRec.width  * scale) / 2.0f,
-        				.y      = entity->pos.y - (srcRec.height * scale) / 2.0f,
-        				.width  = srcRec.width  * scale,
-        				.height = srcRec.height * scale
-    };
+    entity->dstRec = (Rectangle){.x = entity->pos.x - (entity->srcRec.width * scale) / 2.0f,
+                                 .y = entity->pos.y - (entity->srcRec.height * scale) / 2.0f,
+                                 .width = entity->srcRec.width * scale,
 
-    Vector2 origin = {
-        dstRec.width  / 2.0f,
-        dstRec.height / 2.0f
-    };
+                                 .height = entity->srcRec.height * scale};
 
-    DrawTexturePro(entity->sprite, srcRec, dstRec, origin,
-                   RAD2DEG * entity->angle + 90, WHITE);
+    Vector2 origin = {entity->dstRec.width / 2.0f, entity->dstRec.height / 2.0f};
+
+    DrawTexturePro(entity->sprite,
+                   entity->srcRec,
+                   entity->dstRec,
+                   origin,
+                   RAD2DEG * entity->angle + 90,
+                   WHITE);
 }

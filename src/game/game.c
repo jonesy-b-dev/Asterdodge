@@ -1,9 +1,10 @@
-#include "game.h"
+#include <game/game.h>
 #include "raylib.h"
 #include <asteroid/asteroid.h>
 #include <entity/entity.h>
 #include <player/player.h>
 #include <resource_dir.h>
+#include <stdio.h>
 
 Player player; // TODO better initialzation
 
@@ -45,13 +46,33 @@ int RunGame(GameOptions options)
         SpawnAsteroids(options);
 
         RotatePlayerToMouse(&player);
+
         PlayerMove(&player);
-        RenderEntity(&player.base, 1.2);
 
         for (int i = 0; i < options.asteroidPoolSize; i++)
         {
-            RenderEntity(&asteroidPool[i].base, 0.5);
             MoveAsteroidTowardsPlayer(&asteroidPool[i], &player);
+        }
+
+        ///
+        /// Collisions
+        ///
+
+        for (int i = 0; i < options.asteroidPoolSize; i++)
+        {
+            if (CheckCollisionRecs(asteroidPool[i].base.dstRec, player.base.dstRec))
+            {
+                printf("Hit player\n");
+            }
+        }
+
+        ///
+        /// RENDERING
+        ///
+        RenderEntity(&player.base, 1.2);
+        for (int i = 0; i < options.asteroidPoolSize; i++)
+        {
+            RenderEntity(&asteroidPool[i].base, 0.5);
         }
 
         EndDrawing();

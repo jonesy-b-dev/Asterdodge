@@ -1,4 +1,5 @@
 #include <game/game.h>
+#include <utils/gameUtils.h>
 
 int main()
 {
@@ -6,7 +7,7 @@ int main()
                            .windowName = "Asterdodge",
                            .windowHeight = 600,
                            .windowWidth = 1000,
-			   .asteroidPoolSize = 100};
+                           .asteroidPoolSize = 100};
     InitGame(options);
 
     RunGame(options);

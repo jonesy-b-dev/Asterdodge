@@ -41,18 +41,20 @@ Vector2 CalculateSpawnLocation(GameOptions options)
     // 3 = left
     // 4 = right
     int screenSide = GetRandomValue(1, 4);
-    printf("%i", screenSide);
+
     switch (screenSide)
     {
     case 1:
-        return (Vector2){GetRandomValue(0, options.windowWidth), GetRandomValue(-300, 0)};
+        return (Vector2){GetRandomValue(0, options.windowWidth), 
+						 GetRandomValue(-300, 0)};
         break;
     case 2:
         return (Vector2){GetRandomValue(0, options.windowWidth),
                          GetRandomValue(options.windowHeight + 300, options.windowHeight)};
         break;
     case 3:
-        return (Vector2){GetRandomValue(-300, 0), GetRandomValue(0, options.windowHeight)};
+        return (Vector2){GetRandomValue(-300, 0), 
+						 GetRandomValue(0, options.windowHeight)};
         break;
     case 4:
         return (Vector2){GetRandomValue(options.windowWidth + 300, options.windowWidth),
