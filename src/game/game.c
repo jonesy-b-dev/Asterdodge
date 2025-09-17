@@ -1,10 +1,11 @@
-#include <game/game.h>
 #include "raylib.h"
 #include <asteroid/asteroid.h>
 #include <entity/entity.h>
+#include <game/game.h>
 #include <player/player.h>
 #include <resource_dir.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 Player player; // TODO better initialzation
 
@@ -25,8 +26,8 @@ int InitGame(GameOptions options)
     player.base.active = true;
     player.base.name = "Player";
     player.speed = 100;
-	player.health = 100;
-	player.isDead = false;
+    player.health = 100;
+    player.isDead = false;
 
     // Setup asteroid spawner
     InitializeAsteroids(options.asteroidPoolSize);
@@ -65,8 +66,8 @@ int RunGame(GameOptions options)
             if (CheckCollisionRecs(asteroidPool[i].base.dstRec, player.base.dstRec))
             {
                 printf("Hit player\n");
-				AsteroidDeath(i);
-				PlayerTakeDamage(&player, 50);
+                AsteroidDeath(i);
+                PlayerTakeDamage(&player, 50);
             }
         }
 
@@ -91,6 +92,7 @@ int ShutdownGame(GameOptions options)
     // cleanup
     UnloadTexture(player.base.sprite);
     UnloadTexture(asteroidPool[1].base.sprite);
+    free(asteroidPool);
 
     CloseWindow();
     return true;
