@@ -20,7 +20,7 @@ int SpawnAsteroids(GameOptions options);
 
 int MoveAsteroidTowardsPlayer(Asteroid* asteroid, Player* player);
 
-void AsteroidDeath();
+void AsteroidDeath(int asteroidIndex);
 
 // Clears the pool arrays
 void CleanAsteroids();

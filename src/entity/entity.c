@@ -9,9 +9,6 @@ void SetEntityTexture(Entity* entitiy, const char* filename)
 
 void RenderEntity(Entity* entity, float scale)
 {
-    if (!entity->active)
-        return;
-
     entity->srcRec = (Rectangle){.x = 0,
                                  .y = 0,
                                  .width = (float)entity->sprite.width,

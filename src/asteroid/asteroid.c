@@ -45,16 +45,14 @@ Vector2 CalculateSpawnLocation(GameOptions options)
     switch (screenSide)
     {
     case 1:
-        return (Vector2){GetRandomValue(0, options.windowWidth), 
-						 GetRandomValue(-300, 0)};
+        return (Vector2){GetRandomValue(0, options.windowWidth), GetRandomValue(-300, 0)};
         break;
     case 2:
         return (Vector2){GetRandomValue(0, options.windowWidth),
                          GetRandomValue(options.windowHeight + 300, options.windowHeight)};
         break;
     case 3:
-        return (Vector2){GetRandomValue(-300, 0), 
-						 GetRandomValue(0, options.windowHeight)};
+        return (Vector2){GetRandomValue(-300, 0), GetRandomValue(0, options.windowHeight)};
         break;
     case 4:
         return (Vector2){GetRandomValue(options.windowWidth + 300, options.windowWidth),
@@ -72,9 +70,9 @@ int SpawnAsteroids(GameOptions options)
     if (GetRandomValue(100, 1000) >= maxNumberForSpawn)
     {
         if (maxNumberForSpawn >= 0)
-            maxNumberForSpawn--;
+            // maxNumberForSpawn--;
 
-        printf("SpawnAsteroid\n");
+            printf("SpawnAsteroid\n");
         printf("%f", maxNumberForSpawn);
         printf("\n");
 
@@ -110,7 +108,7 @@ int SpawnAsteroids(GameOptions options)
 
 int MoveAsteroidTowardsPlayer(Asteroid* asteroid, Player* player)
 {
-    if (asteroid->base.active)
+    if (asteroid->base.active == true)
     {
         Vector2 dir = {player->base.pos.x - asteroid->base.pos.x,
                        player->base.pos.y - asteroid->base.pos.y};
@@ -131,4 +129,10 @@ int MoveAsteroidTowardsPlayer(Asteroid* asteroid, Player* player)
         }
     }
     return true;
+}
+
+void AsteroidDeath(int asteroidIndex)
+{
+    asteroidPool[asteroidIndex].base.pos = asteroidPool[asteroidIndex].defaultLocation;
+    asteroidPool[asteroidIndex].base.active = false;
 }

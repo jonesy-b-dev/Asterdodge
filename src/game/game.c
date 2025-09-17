@@ -63,6 +63,7 @@ int RunGame(GameOptions options)
             if (CheckCollisionRecs(asteroidPool[i].base.dstRec, player.base.dstRec))
             {
                 printf("Hit player\n");
+				AsteroidDeath(i);
             }
         }
 
