@@ -1,3 +1,23 @@
+# How to run project
+
+* Clone the repo
+
+### Windows
+* Open the build directory in a terminal
+* Run `premake vs2022`
+* Open solution file
+* Hit f5
+
+### Linux
+* Open the root in a terminal
+* run `./run.sh`
+* If any errors occor rerun the command and look at the error
+* If you get an error saying asterdodge cannot be found open the shell script and replace `./bin/Debug/asterdodge` to `./bin/Debug/Asterdodge`
+
+
+
+
+
 # Raylib-Quickstart
 A simple cross platform template for setting up a project with the bleeding edge raylib code.
 Works with C or C++.
