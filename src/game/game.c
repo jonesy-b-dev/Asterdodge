@@ -1,8 +1,5 @@
 #include "raylib.h"
-#include <asteroid/asteroid.h>
-#include <entity/entity.h>
 #include <game/game.h>
-#include <player/player.h>
 #include <resource_dir.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -74,10 +71,12 @@ int RunGame(GameOptions options)
         ///
         /// RENDERING
         ///
-        RenderEntity(&player.base, 1.2);
+
+		// Entities
+        RenderEntityFloat(&player.base, 1.2);
         for (int i = 0; i < options.asteroidPoolSize; i++)
         {
-            RenderEntity(&asteroidPool[i].base, 0.5);
+            RenderEntityFloat(&asteroidPool[i].base, 0.5);
         }
 
         EndDrawing();

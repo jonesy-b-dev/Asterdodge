@@ -17,4 +17,5 @@ typedef struct
 } Entity;
 
 void SetEntityTexture(Entity* entitiy, const char* filename);
-void RenderEntity(Entity* entitiy, float scale);
+void RenderEntityFloat(Entity* entitiy, float scale);
+void RenderEntity(Entity* entity, Vector2 scale);
