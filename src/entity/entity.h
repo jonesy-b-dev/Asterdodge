@@ -6,9 +6,10 @@ typedef struct
 {
     const char* name;
     Vector2 pos;
-    Vector2 vel;
+    Vector2 scale;
     Rectangle srcRec;
     Rectangle dstRec;
+    Rectangle collisionBox;
     Texture2D sprite;
     float angle;
     // float   radius;   // for simple circle collision

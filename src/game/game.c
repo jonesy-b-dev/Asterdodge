@@ -2,9 +2,10 @@
 #include <game/game.h>
 #include <resource_dir.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 Player player; // TODO better initialzation
+UiElement healthBackGround;
+UiElement healthForeGround;
 
 int InitGame(GameOptions options)
 {
@@ -28,6 +29,13 @@ int InitGame(GameOptions options)
 
     // Setup asteroid spawner
     InitializeAsteroids(options.asteroidPoolSize);
+
+    // Setup ui
+    healthBackGround.base.pos = (Vector2){115, 115};
+    healthForeGround.base.pos = (Vector2){110, 110};
+	healthForeGround.base.scale = (Vector2){1, 1};
+    SetEntityTexture(&healthForeGround.base, "HealthProgressBar.png");
+    SetEntityTexture(&healthBackGround.base, "HealthBackGroundBar.png");
 
     return true;
 }
@@ -57,14 +65,16 @@ int RunGame(GameOptions options)
         ///
         /// Collisions
         ///
-
         for (int i = 0; i < options.asteroidPoolSize; i++)
         {
-            if (CheckCollisionRecs(asteroidPool[i].base.dstRec, player.base.dstRec))
+            if (CheckCollisionRecs(asteroidPool[i].base.collisionBox, player.base.collisionBox))
             {
                 printf("Hit player\n");
                 AsteroidDeath(i);
-                PlayerTakeDamage(&player, 50);
+				if(!player->isDead)
+				{
+					PlayerTakeDamage(&player, 50, &healthForeGround);
+				}
             }
         }
 
@@ -78,6 +88,10 @@ int RunGame(GameOptions options)
         {
             RenderEntityFloat(&asteroidPool[i].base, 0.5);
         }
+
+		// UI
+		RenderEntityFloat(&healthBackGround.base, 1);
+		RenderEntity(&healthForeGround.base, healthForeGround.base.scale);
 
         EndDrawing();
     }

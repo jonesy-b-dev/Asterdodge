@@ -19,11 +19,16 @@ void RenderEntity(Entity* entity, Vector2 scale)
                                  .width = (float)entity->sprite.width,
                                  .height = (float)entity->sprite.height};
 
-    entity->dstRec = (Rectangle){.x = entity->pos.x - (entity->srcRec.width * scale.x) / 2.0f,
-                                 .y = entity->pos.y - (entity->srcRec.height * scale.y) / 2.0f,
-                                 .width = entity->srcRec.width * scale.x,
+    entity->dstRec = (Rectangle){.x = entity->pos.x - (entity->srcRec.width) / 2.0f,
+                                 .y = entity->pos.y - (entity->srcRec.height) / 2.0f,
 
-                                 .height = entity->srcRec.height * scale.x};
+                                 .width = entity->srcRec.width * scale.x,
+                                 .height = entity->srcRec.height * scale.y};
+
+    entity->collisionBox = (Rectangle){.x = entity->dstRec.x,
+                                       .y = entity->dstRec.y,
+                                       .width = entity->dstRec.width,
+                                       .height = entity->dstRec.height};
 
     Vector2 origin = {entity->dstRec.width / 2.0f, entity->dstRec.height / 2.0f};
 

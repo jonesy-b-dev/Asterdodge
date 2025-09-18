@@ -36,10 +36,17 @@ void PlayerMove(Player* player)
         player->base.pos.y += player->speed * GetFrameTime();
 }
 
-void PlayerTakeDamage(Player* player, float damage)
+void PlayerTakeDamage(Player* player, int damage, UiElement* healthBar)
 {
+    printf("Damage %i: \n", damage);
     player->health -= damage;
-    printf("Player health: %f \n", player->health);
     if (player->health <= 0)
+    {
         player->isDead = true;
+        healthBar->base.scale.x = 0;
+    }
+
+    healthBar->base.scale.x = (float)player->health / 100.0f;
+
+    printf("Player health: %f \n", player->health);
 }
