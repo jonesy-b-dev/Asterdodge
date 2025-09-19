@@ -135,7 +135,9 @@ int ShutdownGame(GameOptions options)
     // cleanup
     UnloadTexture(player.base.sprite);
     UnloadTexture(asteroidPool[1].base.sprite);
+    UnloadTexture(bulletPool[1].base.sprite);
     free(asteroidPool);
+    free(bulletPool);
 
     CloseWindow();
     return true;
