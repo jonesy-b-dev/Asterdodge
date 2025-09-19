@@ -93,7 +93,7 @@ int SpawnAsteroids(GameOptions options)
 
                 asteroidPool[i].base.pos = spawnPosition;
                 asteroidPool[i].speed = 100;
-                printf("Asteroid spawned on screen\n");
+                printf("\nAsteroid spawned on screen\n");
                 break;
             }
         }

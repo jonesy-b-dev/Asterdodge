@@ -1,5 +1,5 @@
-#include "raylib.h"
 #include <game/game.h>
+#include <raylib.h>
 #include <resource_dir.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,12 +28,13 @@ int InitGame(GameOptions options)
     player.health = 100;
     player.isDead = false;
 
-    // Setup asteroid spawner
+    // Setup entity pools
     InitializeAsteroids(options.asteroidPoolSize);
+    InitializeBullets(options.bulletPoolSize);
 
     // Setup ui
-    healthBackGround.base.pos = (Vector2){110, 50};
-    healthForeGround.base.pos = (Vector2){110, 50};
+    healthBackGround.base.pos = (Vector2){140, 50};
+    healthForeGround.base.pos = (Vector2){140, 50};
     healthForeGround.base.scale = (Vector2){1, 1};
     SetEntityTexture(&healthForeGround.base, "HealthProgressBar.png");
     SetEntityTexture(&healthBackGround.base, "HealthBackGroundBar.png");
@@ -63,6 +64,10 @@ int RunGame(GameOptions options)
             MoveAsteroidTowardsPlayer(&asteroidPool[i], &player);
         }
 
+        for (int i = 0; i < options.bulletPoolSize; i++)
+        {
+            MoveBullet(&bulletPool[i]);
+        }
         ///
         /// Collisions
         ///
@@ -79,21 +84,45 @@ int RunGame(GameOptions options)
             }
         }
 
+        for (int i = 0; i < options.bulletPoolSize; i++)
+        {
+            if (!bulletPool[i].base.active)
+                continue;
+
+            for (int x = 0; x < options.asteroidPoolSize; x++)
+            {
+                if (!asteroidPool[i].base.active)
+                    continue;
+
+                if (CheckCollisionRecs(bulletPool[i].base.collisionBox,
+                                       asteroidPool[x].base.collisionBox))
+                {
+                    printf("Bullet hit asteroid\n");
+                    AsteroidDeath(x);
+                }
+            }
+        }
         ///
         /// RENDERING
         ///
 
         // Entities
         RenderEntityFloat(&player.base, 1.2);
+        // ASTEROID
         for (int i = 0; i < options.asteroidPoolSize; i++)
         {
             RenderEntityFloat(&asteroidPool[i].base, 0.5);
+        }
+        // BULLET
+        for (int i = 0; i < options.bulletPoolSize; i++)
+        {
+            RenderEntityFloat(&bulletPool[i].base, 0.1);
         }
 
         // UI
         RenderEntityFloat(&healthBackGround.base, 1);
         RenderEntity(&healthForeGround.base, healthForeGround.base.scale);
-
+        DrawText("HP", 100, 100, 20, WHITE); // Draw text (using default font)
         EndDrawing();
     }
 

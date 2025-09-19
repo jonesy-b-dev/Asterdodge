@@ -1,5 +1,6 @@
 #pragma once
 #include <asteroid/asteroid.h>
+#include <bullet/bullet.h>
 #include <entity/entity.h>
 #include <player/player.h>
 #include <uiElement/uiElement.h>
