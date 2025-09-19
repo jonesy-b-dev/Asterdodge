@@ -2,6 +2,7 @@
 #include <game/game.h>
 #include <resource_dir.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 Player player; // TODO better initialzation
 UiElement healthBackGround;
@@ -71,7 +72,7 @@ int RunGame(GameOptions options)
             {
                 printf("Hit player\n");
                 AsteroidDeath(i);
-				if(!player->isDead)
+				if(!player.isDead)
 				{
 					PlayerTakeDamage(&player, 50, &healthForeGround);
 				}
