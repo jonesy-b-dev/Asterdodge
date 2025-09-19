@@ -32,9 +32,9 @@ int InitGame(GameOptions options)
     InitializeAsteroids(options.asteroidPoolSize);
 
     // Setup ui
-    healthBackGround.base.pos = (Vector2){115, 115};
-    healthForeGround.base.pos = (Vector2){110, 110};
-	healthForeGround.base.scale = (Vector2){1, 1};
+    healthBackGround.base.pos = (Vector2){110, 50};
+    healthForeGround.base.pos = (Vector2){110, 50};
+    healthForeGround.base.scale = (Vector2){1, 1};
     SetEntityTexture(&healthForeGround.base, "HealthProgressBar.png");
     SetEntityTexture(&healthBackGround.base, "HealthBackGroundBar.png");
 
@@ -72,10 +72,10 @@ int RunGame(GameOptions options)
             {
                 printf("Hit player\n");
                 AsteroidDeath(i);
-				if(!player.isDead)
-				{
-					PlayerTakeDamage(&player, 50, &healthForeGround);
-				}
+                if (!player.isDead)
+                {
+                    PlayerTakeDamage(&player, 10, &healthForeGround);
+                }
             }
         }
 
@@ -83,16 +83,16 @@ int RunGame(GameOptions options)
         /// RENDERING
         ///
 
-		// Entities
+        // Entities
         RenderEntityFloat(&player.base, 1.2);
         for (int i = 0; i < options.asteroidPoolSize; i++)
         {
             RenderEntityFloat(&asteroidPool[i].base, 0.5);
         }
 
-		// UI
-		RenderEntityFloat(&healthBackGround.base, 1);
-		RenderEntity(&healthForeGround.base, healthForeGround.base.scale);
+        // UI
+        RenderEntityFloat(&healthBackGround.base, 1);
+        RenderEntity(&healthForeGround.base, healthForeGround.base.scale);
 
         EndDrawing();
     }
