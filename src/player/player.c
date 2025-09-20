@@ -15,8 +15,8 @@ void RotatePlayerToMouse(Player* player)
     float halfWidth = player->base.sprite.width / 2.0f;
     float halfHeight = player->base.sprite.height / 2.0f;
 
-    Vector2 dir = {mousePos.x - player->base.pos.x + halfWidth,
-                   mousePos.y - player->base.pos.y + halfHeight};
+    Vector2 dir = {mousePos.x - player->base.pos.x,
+                   mousePos.y - player->base.pos.y};
 
     // atan2 returns the angle between the X‑axis and the vector
     player->base.angle = RAD2DEG * atan2f(dir.y, dir.x) + 90;
@@ -39,6 +39,10 @@ void PlayerMove(Player* player)
     {
         ShootBullet(player);
     }
+    if (IsKeyPressed(MOUSE_BUTTON_LEFT))
+	{
+		printf("MOUSE_BUTTON_LEFT\n");
+	}
 }
 
 void PlayerTakeDamage(Player* player, int damage, UiElement* healthBar)
