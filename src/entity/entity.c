@@ -49,7 +49,7 @@ void RenderEntity(Entity* entity, Vector2 scale)
                    entity->srcRec,
                    entity->dstRec,
                    origin,
-                   RAD2DEG * entity->angle, //+ 90,
+                   entity->angle, //+ 90,
                    WHITE);
 
     // DrawRectangleLinesEx(entity->collisionBox, 3.0f, RED);

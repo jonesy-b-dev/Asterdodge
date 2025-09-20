@@ -18,8 +18,8 @@ void RotatePlayerToMouse(Player* player)
     Vector2 dir = {mousePos.x - player->base.pos.x + halfWidth,
                    mousePos.y - player->base.pos.y + halfHeight};
 
-    // atan2 returns the angle (in radians) between the X‑axis and the vector
-    player->base.angle = atan2f(dir.y, dir.x);
+    // atan2 returns the angle between the X‑axis and the vector
+    player->base.angle = RAD2DEG * atan2f(dir.y, dir.x) + 90;
 }
 
 void PlayerMove(Player* player)
