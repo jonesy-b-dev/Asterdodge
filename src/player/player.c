@@ -11,10 +11,6 @@ void RotatePlayerToMouse(Player* player)
 
     Vector2 mousePos = GetMousePosition();
 
-    // Vector from player to mouse
-    float halfWidth = player->base.sprite.width / 2.0f;
-    float halfHeight = player->base.sprite.height / 2.0f;
-
     Vector2 dir = {mousePos.x - player->base.pos.x,
                    mousePos.y - player->base.pos.y};
 
@@ -35,14 +31,10 @@ void PlayerMove(Player* player)
         player->base.pos.y -= player->speed * GetFrameTime();
     if (IsKeyDown(KEY_S))
         player->base.pos.y += player->speed * GetFrameTime();
-    if (IsKeyPressed(MOUSE_BUTTON_LEFT) || IsKeyPressed(KEY_SPACE))
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || IsKeyPressed(KEY_SPACE))
     {
         ShootBullet(player);
     }
-    if (IsKeyPressed(MOUSE_BUTTON_LEFT))
-	{
-		printf("MOUSE_BUTTON_LEFT\n");
-	}
 }
 
 void PlayerTakeDamage(Player* player, int damage, UiElement* healthBar)
