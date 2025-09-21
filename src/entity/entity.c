@@ -29,11 +29,9 @@ void RenderEntity(Entity* entity, Vector2 scale)
     // Wacky fix for collision boxes being offset, hate the solution but it works:(
     if (entity && entity->name)
     {
-        float divisor = strcmp(entity->name, "Asteroid") == 0 ? 4.0f : 2.0f;
-
         /* Build the collision box using the selected divisor */
-        entity->collisionBox = (Rectangle){.x = entity->dstRec.x - entity->sprite.width / divisor,
-                                           .y = entity->dstRec.y - entity->sprite.height / divisor,
+        entity->collisionBox = (Rectangle){.x = entity->dstRec.x - entity->sprite.width / (2 / scale.x),
+                                           .y = entity->dstRec.y - entity->sprite.height / (2 / scale.y),
                                            .width = entity->dstRec.width,
                                            .height = entity->dstRec.height};
     }
