@@ -27,6 +27,7 @@ int InitGame(GameOptions options)
     player.speed = 100;
     player.health = 100;
     player.isDead = false;
+    player.score = 0;
 
     // Setup entity pools
     InitializeAsteroids(options.asteroidPoolSize);
@@ -68,6 +69,7 @@ int RunGame(GameOptions options)
         {
             MoveBullet(&bulletPool[i]);
         }
+
         ///
         /// Collisions
         ///
@@ -101,6 +103,7 @@ int RunGame(GameOptions options)
                                        asteroidPool[x].base.collisionBox))
                 {
                     printf("Bullet hit asteroid\n");
+                    player.score += 10;
                     AsteroidDeath(x);
                 }
             }
@@ -114,22 +117,23 @@ int RunGame(GameOptions options)
         // ASTEROID
         for (int i = 0; i < options.asteroidPoolSize; i++)
         {
-            if (!asteroidPool[i].base.active)
-                continue;
             RenderEntityFloat(&asteroidPool[i].base, 0.5);
         }
         // BULLET
         for (int i = 0; i < options.bulletPoolSize; i++)
         {
-            if (!bulletPool[i].base.active)
-                continue;
             RenderEntityFloat(&bulletPool[i].base, 0.1);
         }
 
         // UI
         RenderEntityFloat(&healthBackGround.base, 1);
         RenderEntity(&healthForeGround.base, healthForeGround.base.scale);
-        DrawText("HP", 100, 100, 20, WHITE); // Draw text (using default font)
+        DrawText("HP", 100, 100, 20, WHITE);
+
+        char scorebuffer[30];
+        snprintf(scorebuffer, sizeof(scorebuffer), "Score: %d", player.score);
+        DrawText(scorebuffer, options.windowWidth - 200, 50, 20, WHITE);
+
         EndDrawing();
     }
 

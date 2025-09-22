@@ -9,6 +9,7 @@ typedef struct
     int health;
     int speed;
     bool isDead;
+    int score;
 } Player;
 
 void RotatePlayerToMouse(Player* player);
