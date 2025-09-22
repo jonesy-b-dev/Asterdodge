@@ -13,6 +13,7 @@ Asteroid* InitializeAsteroids(int asteroidAmount)
 {
     m_asteroidAmount = asteroidAmount;
     asteroidPool = (Asteroid*)malloc(asteroidAmount * sizeof(Asteroid));
+
     if (!asteroidPool)
     {
         perror("Failed to allocate asteroid pool");
@@ -28,6 +29,7 @@ Asteroid* InitializeAsteroids(int asteroidAmount)
         asteroidPool[i].base.pos = asteroidPool[i].defaultLocation;
         asteroidPool[i].base.sprite = asteroidSprite;
         asteroidPool[i].base.name = "Asteroid";
+        asteroidPool[i].goToPlayer = 0;
     }
 
     return asteroidPool;
@@ -60,24 +62,24 @@ Vector2 CalculateSpawnLocation(GameOptions options)
         break;
     default:
         return (Vector2){options.windowWidth / 2.0f, options.windowHeight / 2.0f};
+        perror("Somehow failed to generate number between 1 and 4\n");
         break;
     }
 }
 
-int SpawnAsteroids(GameOptions options)
+int SpawnAsteroids(GameOptions options, Player* player)
 {
     int result = GetRandomValue(1, 1000);
     if (GetRandomValue(100, 1000) >= maxNumberForSpawn)
     {
         if (maxNumberForSpawn >= 0)
-            // maxNumberForSpawn--;
+            maxNumberForSpawn--;
 
-            printf("SpawnAsteroid\n");
+        printf("SpawnAsteroid\n");
         printf("%f", maxNumberForSpawn);
         printf("\n");
 
         // Get first non active asteroid
-        // for (int i = 0; i < sizeof(asteroidPool) / sizeof(Asteroid); i++)
         int foundNonActive = false;
         for (int i = 0; i < m_asteroidAmount; i++)
         {
@@ -93,7 +95,12 @@ int SpawnAsteroids(GameOptions options)
 
                 asteroidPool[i].base.pos = spawnPosition;
                 asteroidPool[i].speed = 100;
+                asteroidPool[i].base.angle =
+                    RAD2DEG * atan2f(player->base.pos.x - asteroidPool[i].base.pos.x,
+                                     player->base.pos.y - asteroidPool[i].base.pos.y);
+                asteroidPool[i].goToPlayer = GetRandomValue(0, 1);
                 printf("\nAsteroid spawned on screen\n");
+                printf("%i\n", asteroidPool[i].goToPlayer);
                 break;
             }
         }
@@ -129,6 +136,14 @@ int MoveAsteroidTowardsPlayer(Asteroid* asteroid, Player* player)
         }
     }
     return true;
+}
+
+void MoveAsteroid(Asteroid* asteroid)
+{
+    float asteroidRadians = DEG2RAD * (asteroid->base.angle - 90);
+
+    asteroid->base.pos.x -= asteroid->speed * cosf(asteroidRadians) * GetFrameTime();
+    asteroid->base.pos.y -= asteroid->speed * sinf(asteroidRadians) * GetFrameTime();
 }
 
 void AsteroidDeath(int asteroidIndex)

@@ -30,10 +30,11 @@ void RenderEntity(Entity* entity, Vector2 scale)
     if (entity && entity->name)
     {
         /* Build the collision box using the selected divisor */
-        entity->collisionBox = (Rectangle){.x = entity->dstRec.x - entity->sprite.width / (2 / scale.x),
-                                           .y = entity->dstRec.y - entity->sprite.height / (2 / scale.y),
-                                           .width = entity->dstRec.width,
-                                           .height = entity->dstRec.height};
+        entity->collisionBox =
+            (Rectangle){.x = entity->dstRec.x - entity->sprite.width / (2 / scale.x),
+                        .y = entity->dstRec.y - entity->sprite.height / (2 / scale.y),
+                        .width = entity->dstRec.width,
+                        .height = entity->dstRec.height};
     }
     else
     {
@@ -50,6 +51,6 @@ void RenderEntity(Entity* entity, Vector2 scale)
                    entity->angle, //+ 90,
                    WHITE);
 
-    // DrawRectangleLinesEx(entity->collisionBox, 3.0f, RED);
-    // DrawRectangleLinesEx(entity->dstRec, 2.0f, GREEN);
+    // rawRectangleLinesEx(entity->collisionBox, 3.0f, RED);
+    //  DrawRectangleLinesEx(entity->dstRec, 2.0f, GREEN);
 }

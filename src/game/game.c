@@ -54,7 +54,7 @@ int RunGame(GameOptions options)
         // Setup the back buffer for drawing (clear color and depth buffers)
         ClearBackground(BLACK);
 
-        SpawnAsteroids(options);
+        SpawnAsteroids(options, &player);
 
         RotatePlayerToMouse(&player);
 
@@ -62,7 +62,14 @@ int RunGame(GameOptions options)
 
         for (int i = 0; i < options.asteroidPoolSize; i++)
         {
-            MoveAsteroidTowardsPlayer(&asteroidPool[i], &player);
+            if (asteroidPool[i].goToPlayer)
+            {
+                MoveAsteroidTowardsPlayer(&asteroidPool[i], &player);
+            }
+            else
+            {
+                MoveAsteroid(&asteroidPool[i]);
+            }
         }
 
         for (int i = 0; i < options.bulletPoolSize; i++)
