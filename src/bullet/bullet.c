@@ -1,4 +1,5 @@
 #include <bullet/bullet.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -41,6 +42,7 @@ int ShootBullet(Player* player)
             foundNonActive = true;
             bulletPool[i].base.active = true;
             bulletPool[i].base.pos = player->base.pos;
+            bulletPool[i].base.angle = AngleToMouseFromEntity(&bulletPool[i].base);
             bulletPool[i].speed = 200;
             break;
         }
@@ -55,5 +57,8 @@ int ShootBullet(Player* player)
 
 void MoveBullet(Bullet* bullet)
 {
-    bullet->base.pos.y -= bullet->speed * GetFrameTime();
+    float bulletRadians = DEG2RAD * (bullet->base.angle + 90);
+
+    bullet->base.pos.x -= bullet->speed * cosf(bulletRadians) * GetFrameTime();
+    bullet->base.pos.y -= bullet->speed * sinf(bulletRadians) * GetFrameTime();
 }

@@ -122,7 +122,7 @@ int RunGame(GameOptions options)
         // BULLET
         for (int i = 0; i < options.bulletPoolSize; i++)
         {
-            RenderEntityFloat(&bulletPool[i].base, 0.1);
+            RenderEntityFloat(&bulletPool[i].base, 0.05);
         }
 
         // UI
