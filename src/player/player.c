@@ -1,6 +1,5 @@
 #include "raylib.h"
 #include <bullet/bullet.h>
-#include <math.h>
 #include <player/player.h>
 #include <stdio.h>
 
@@ -9,13 +8,7 @@ void RotatePlayerToMouse(Player* player)
     if (player->isDead)
         return;
 
-    Vector2 mousePos = GetMousePosition();
-
-    Vector2 dir = {mousePos.x - player->base.pos.x,
-                   mousePos.y - player->base.pos.y};
-
-    // atan2 returns the angle between the X‑axis and the vector
-    player->base.angle = RAD2DEG * atan2f(dir.y, dir.x) + 90;
+    player->base.angle = AngleToMouseFromEntity(&player->base);
 }
 
 void PlayerMove(Player* player)

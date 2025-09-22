@@ -1,4 +1,5 @@
 #pragma once
+#include <entity/entity.h>
 
 typedef struct
 {
@@ -9,3 +10,5 @@ typedef struct
     int asteroidPoolSize;
     int bulletPoolSize;
 } GameOptions;
+
+float AngleToMouseFromEntity(Entity* entity);
