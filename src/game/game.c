@@ -91,7 +91,7 @@ int RunGame(GameOptions options)
 
             for (int x = 0; x < options.asteroidPoolSize; x++)
             {
-                if (!asteroidPool[i].base.active)
+                if (!asteroidPool[x].base.active)
                     continue;
 
                 if (CheckCollisionRecs(bulletPool[i].base.collisionBox,
