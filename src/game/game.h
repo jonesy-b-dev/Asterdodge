@@ -6,8 +6,8 @@
 #include <uiElement/uiElement.h>
 #include <utils/gameUtils.h>
 
-int InitGame(GameOptions options);
+int InitGame(GameOptions* options);
 
-int RunGame(GameOptions options);
+int RunGame();
 
-int ShutdownGame(GameOptions options);
+int ShutdownGame();

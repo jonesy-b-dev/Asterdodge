@@ -9,9 +9,9 @@ int main()
                            .windowWidth = 1000,
                            .asteroidPoolSize = 100,
                            .bulletPoolSize = 100};
-    InitGame(options);
+    InitGame(&options);
 
-    RunGame(options);
+    RunGame();
 
     return 0;
 }

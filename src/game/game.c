@@ -7,21 +7,27 @@
 Player player; // TODO better initialzation
 UiElement healthBackGround;
 UiElement healthForeGround;
+GameOptions m_options;
 
-int InitGame(GameOptions options)
+void CheckCollisions();
+void RenderEntities();
+void RenderUserInterface();
+
+int InitGame(GameOptions* options)
 {
+    m_options = *options;
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
 
-    InitWindow(options.windowWidth, options.windowHeight, options.windowName);
+    InitWindow(m_options.windowWidth, m_options.windowHeight, m_options.windowName);
 
-    if (!SearchAndSetResourceDir(options.resourceDirectory))
+    if (!SearchAndSetResourceDir(m_options.resourceDirectory))
     {
         return false;
     };
 
     // Setup player
     SetEntityTexture(&player.base, "wabbit_alpha.png");
-    player.base.pos = (Vector2){options.windowWidth / 2.0f, options.windowHeight / 2.0f};
+    player.base.pos = (Vector2){m_options.windowWidth / 2.0f, m_options.windowHeight / 2.0f};
     player.base.active = true;
     player.base.name = "Player";
     player.speed = 100;
@@ -30,8 +36,8 @@ int InitGame(GameOptions options)
     player.score = 0;
 
     // Setup entity pools
-    InitializeAsteroids(options.asteroidPoolSize);
-    InitializeBullets(options.bulletPoolSize);
+    InitializeAsteroids(m_options.asteroidPoolSize);
+    InitializeBullets(m_options.bulletPoolSize);
 
     // Setup ui
     healthBackGround.base.pos = (Vector2){140, 50};
@@ -43,24 +49,23 @@ int InitGame(GameOptions options)
     return true;
 }
 
-int RunGame(GameOptions options)
+int RunGame()
 {
     // game loop
     while (!WindowShouldClose())
     {
-        // drawing
         BeginDrawing();
 
         // Setup the back buffer for drawing (clear color and depth buffers)
         ClearBackground(BLACK);
 
-        SpawnAsteroids(options, &player);
+        SpawnAsteroids(m_options, &player);
 
         RotatePlayerToMouse(&player);
 
         PlayerMove(&player);
 
-        for (int i = 0; i < options.asteroidPoolSize; i++)
+        for (int i = 0; i < m_options.asteroidPoolSize; i++)
         {
             if (asteroidPool[i].goToPlayer)
             {
@@ -72,83 +77,96 @@ int RunGame(GameOptions options)
             }
         }
 
-        for (int i = 0; i < options.bulletPoolSize; i++)
+        for (int i = 0; i < m_options.bulletPoolSize; i++)
         {
             MoveBullet(&bulletPool[i]);
         }
 
-        ///
-        /// Collisions
-        ///
+        CheckCollisions();
 
-        // ASTEROID -> PLAYER
-        for (int i = 0; i < options.asteroidPoolSize; i++)
-        {
-            if (CheckCollisionRecs(asteroidPool[i].base.collisionBox, player.base.collisionBox))
-            {
-                printf("Hit player\n");
-                AsteroidDeath(i);
-                if (!player.isDead)
-                {
-                    PlayerTakeDamage(&player, 10, &healthForeGround);
-                }
-            }
-        }
+        RenderEntities();
 
-        // BULLET -> ASTEROID
-        for (int i = 0; i < options.bulletPoolSize; i++)
-        {
-            if (!bulletPool[i].base.active)
-                continue;
-
-            for (int x = 0; x < options.asteroidPoolSize; x++)
-            {
-                if (!asteroidPool[x].base.active)
-                    continue;
-
-                if (CheckCollisionRecs(bulletPool[i].base.collisionBox,
-                                       asteroidPool[x].base.collisionBox))
-                {
-                    printf("Bullet hit asteroid\n");
-                    player.score += 10;
-                    AsteroidDeath(x);
-                }
-            }
-        }
-        ///
-        /// RENDERING
-        ///
-
-        // Entities
-        RenderEntityFloat(&player.base, 1.2);
-        // ASTEROID
-        for (int i = 0; i < options.asteroidPoolSize; i++)
-        {
-            RenderEntityFloat(&asteroidPool[i].base, 0.5);
-        }
-        // BULLET
-        for (int i = 0; i < options.bulletPoolSize; i++)
-        {
-            RenderEntityFloat(&bulletPool[i].base, 0.05);
-        }
-
-        // UI
-        RenderEntityFloat(&healthBackGround.base, 1);
-        RenderEntity(&healthForeGround.base, healthForeGround.base.scale);
-        DrawText("HP", 100, 100, 20, WHITE);
-
-        char scorebuffer[30];
-        snprintf(scorebuffer, sizeof(scorebuffer), "Score: %d", player.score);
-        DrawText(scorebuffer, options.windowWidth - 200, 50, 20, WHITE);
+        RenderUserInterface();
 
         EndDrawing();
     }
 
-    ShutdownGame(options);
+    ShutdownGame();
     return true;
 }
 
-int ShutdownGame(GameOptions options)
+void CheckCollisions()
+{
+    ///
+    /// Collisions
+    ///
+
+    // ASTEROID -> PLAYER
+    for (int i = 0; i < m_options.asteroidPoolSize; i++)
+    {
+        if (CheckCollisionRecs(asteroidPool[i].base.collisionBox, player.base.collisionBox))
+        {
+            printf("Hit player\n");
+            AsteroidDeath(i);
+            if (!player.isDead)
+            {
+                PlayerTakeDamage(&player, 10, &healthForeGround);
+            }
+        }
+    }
+
+    // BULLET -> ASTEROID
+    for (int i = 0; i < m_options.bulletPoolSize; i++)
+    {
+        if (!bulletPool[i].base.active)
+            continue;
+
+        for (int x = 0; x < m_options.asteroidPoolSize; x++)
+        {
+            if (!asteroidPool[x].base.active)
+                continue;
+
+            if (CheckCollisionRecs(bulletPool[i].base.collisionBox,
+                                   asteroidPool[x].base.collisionBox))
+            {
+                printf("Bullet hit asteroid\n");
+                player.score += 10;
+                AsteroidDeath(x);
+                BulletDeath(i);
+            }
+        }
+    }
+}
+
+void RenderEntities()
+{
+    // Entities
+    RenderEntityFloat(&player.base, 1.2);
+    // ASTEROID
+    for (int i = 0; i < m_options.asteroidPoolSize; i++)
+    {
+        RenderEntityFloat(&asteroidPool[i].base, 0.5);
+    }
+    // BULLET
+    for (int i = 0; i < m_options.bulletPoolSize; i++)
+    {
+        RenderEntityFloat(&bulletPool[i].base, 0.05);
+    }
+}
+
+void RenderUserInterface()
+{
+    // UI
+    RenderEntityFloat(&healthBackGround.base, 1);
+    RenderEntity(&healthForeGround.base, healthForeGround.base.scale);
+    DrawText("HP", 100, 100, 20, WHITE);
+
+    char scorebuffer[30];
+    snprintf(scorebuffer, sizeof(scorebuffer), "Score: %d", player.score);
+    DrawText(scorebuffer, m_options.windowWidth - 200, 50, 20, WHITE);
+}
+
+int ShutdownGame()
 {
     // cleanup
     UnloadTexture(player.base.sprite);
