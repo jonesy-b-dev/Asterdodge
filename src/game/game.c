@@ -71,6 +71,8 @@ int RunGame(GameOptions options)
         ///
         /// Collisions
         ///
+
+        // ASTEROID -> PLAYER
         for (int i = 0; i < options.asteroidPoolSize; i++)
         {
             if (CheckCollisionRecs(asteroidPool[i].base.collisionBox, player.base.collisionBox))
@@ -84,6 +86,7 @@ int RunGame(GameOptions options)
             }
         }
 
+        // BULLET -> ASTEROID
         for (int i = 0; i < options.bulletPoolSize; i++)
         {
             if (!bulletPool[i].base.active)
@@ -111,11 +114,15 @@ int RunGame(GameOptions options)
         // ASTEROID
         for (int i = 0; i < options.asteroidPoolSize; i++)
         {
+            if (!asteroidPool[i].base.active)
+                continue;
             RenderEntityFloat(&asteroidPool[i].base, 0.5);
         }
         // BULLET
         for (int i = 0; i < options.bulletPoolSize; i++)
         {
+            if (!bulletPool[i].base.active)
+                continue;
             RenderEntityFloat(&bulletPool[i].base, 0.1);
         }
 
