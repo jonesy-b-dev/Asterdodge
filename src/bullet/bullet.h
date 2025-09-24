@@ -17,8 +17,6 @@ Bullet* InitializeBullets(int bulletAmount);
 
 int ShootBullet(Player* player);
 
-void BulletDespawn(int asteroidIndex);
-
 void MoveBullet(Bullet* bullet);
 
 void BulletDeath(int bulletIndex);

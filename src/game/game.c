@@ -59,7 +59,7 @@ int RunGame()
         // Setup the back buffer for drawing (clear color and depth buffers)
         ClearBackground(BLACK);
 
-        SpawnAsteroids(m_options, &player);
+        // SpawnAsteroids(m_options, &player);
 
         RotatePlayerToMouse(&player);
 
@@ -80,6 +80,11 @@ int RunGame()
         for (int i = 0; i < m_options.bulletPoolSize; i++)
         {
             MoveBullet(&bulletPool[i]);
+            if (IsEntityOutOfBounds(&bulletPool[i].base, m_options))
+            {
+                printf("Bullet out of bounds despawn\n");
+                BulletDeath(i);
+            }
         }
 
         CheckCollisions();

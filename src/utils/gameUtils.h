@@ -1,5 +1,6 @@
 #pragma once
 #include <entity/entity.h>
+#include <stdbool.h>
 
 typedef struct
 {
@@ -12,3 +13,4 @@ typedef struct
 } GameOptions;
 
 float AngleToMouseFromEntity(Entity* entity);
+bool IsEntityOutOfBounds(Entity* entity, GameOptions options);
