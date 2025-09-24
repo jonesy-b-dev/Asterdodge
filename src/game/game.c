@@ -74,6 +74,12 @@ int RunGame()
             else
             {
                 MoveAsteroid(&asteroidPool[i]);
+                // TODO figure out something for this
+                // if (IsEntityOutOfBounds(&asteroidPool[i].base, m_options))
+                //{
+                //     printf("Asteroid out of bounds despawn\n");
+                //     AsteroidDeath(i);
+                // }
             }
         }
 
@@ -164,11 +170,11 @@ void RenderUserInterface()
     // UI
     RenderEntityFloat(&healthBackGround.base, 1);
     RenderEntity(&healthForeGround.base, healthForeGround.base.scale);
-    DrawText("HP", 100, 100, 20, WHITE);
+    DrawText("HP", 15, 40, 20, WHITE);
 
     char scorebuffer[30];
     snprintf(scorebuffer, sizeof(scorebuffer), "Score: %d", player.score);
-    DrawText(scorebuffer, m_options.windowWidth - 200, 50, 20, WHITE);
+    DrawText(scorebuffer, m_options.windowWidth - 200, 40, 20, WHITE);
 }
 
 int ShutdownGame()

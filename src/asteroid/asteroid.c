@@ -75,7 +75,6 @@ Vector2 CalculateSpawnLocation(GameOptions options)
 
 int SpawnAsteroids(GameOptions options, Player* player)
 {
-    printf("%f\n", spawnTimerTarget);
     spawnTimer += GetFrameTime();
     difficultyIncreaseTime += GetFrameTime();
 
