@@ -59,7 +59,7 @@ int RunGame()
         // Setup the back buffer for drawing (clear color and depth buffers)
         ClearBackground(BLACK);
 
-        // SpawnAsteroids(m_options, &player);
+        SpawnAsteroids(m_options, &player);
 
         RotatePlayerToMouse(&player);
 

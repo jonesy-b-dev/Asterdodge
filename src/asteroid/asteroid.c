@@ -6,11 +6,17 @@
 #include <utils/gameUtils.h>
 
 Asteroid* asteroidPool = NULL;
-float maxNumberForSpawn = 1000;
-int m_asteroidAmount;
+float spawnTimerTarget = 0;
+float spawnTimer = 0;
+float difficultyIncreaseInterval = 5;
+float difficultyIncreaseTime = 0;
+int m_asteroidAmount = 0;
 
 Asteroid* InitializeAsteroids(int asteroidAmount)
 {
+    spawnTimerTarget = 5 + ((float)GetRandomValue(100, 1000) / 1000.0f);
+    printf("%f", spawnTimerTarget);
+
     m_asteroidAmount = asteroidAmount;
     asteroidPool = (Asteroid*)malloc(asteroidAmount * sizeof(Asteroid));
 
@@ -69,15 +75,27 @@ Vector2 CalculateSpawnLocation(GameOptions options)
 
 int SpawnAsteroids(GameOptions options, Player* player)
 {
-    int result = GetRandomValue(1, 1000);
-    if (GetRandomValue(100, 1000) >= maxNumberForSpawn)
-    {
-        if (maxNumberForSpawn >= 0)
-            maxNumberForSpawn--;
+    printf("%f\n", spawnTimerTarget);
+    spawnTimer += GetFrameTime();
+    difficultyIncreaseTime += GetFrameTime();
 
+    // Decrease spawnTimerTarget every 5 seconds
+    if (difficultyIncreaseTime >= difficultyIncreaseInterval)
+    {
+        difficultyIncreaseTime = 0;
+        float scale = 0.95f + ((float)GetRandomValue(0, 500) / 10000.0f);
+        spawnTimerTarget *= scale;
+
+        if (spawnTimerTarget < 0.5f)
+        {
+            spawnTimerTarget = 0.5f;
+        }
+    }
+
+    if (spawnTimer >= spawnTimerTarget)
+    {
+        spawnTimer = 0;
         printf("SpawnAsteroid\n");
-        printf("%f", maxNumberForSpawn);
-        printf("\n");
 
         // Get first non active asteroid
         int foundNonActive = false;
