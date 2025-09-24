@@ -114,8 +114,8 @@ int SpawnAsteroids(GameOptions options, Player* player)
                 asteroidPool[i].base.pos = spawnPosition;
                 asteroidPool[i].speed = 100;
                 asteroidPool[i].base.angle =
-                    RAD2DEG * atan2f(player->base.pos.x - asteroidPool[i].base.pos.x,
-                                     player->base.pos.y - asteroidPool[i].base.pos.y);
+                    RAD2DEG * atan2f(player->base.pos.y - asteroidPool[i].base.pos.y,
+                                     player->base.pos.x - asteroidPool[i].base.pos.x);
                 asteroidPool[i].goToPlayer = GetRandomValue(0, 1);
                 printf("\nAsteroid spawned on screen\n");
                 printf("%i\n", asteroidPool[i].goToPlayer);
@@ -158,7 +158,7 @@ int MoveAsteroidTowardsPlayer(Asteroid* asteroid, Player* player)
 
 void MoveAsteroid(Asteroid* asteroid)
 {
-    float asteroidRadians = DEG2RAD * (asteroid->base.angle - 90);
+    float asteroidRadians = DEG2RAD * (asteroid->base.angle - 180);
 
     asteroid->base.pos.x -= asteroid->speed * cosf(asteroidRadians) * GetFrameTime();
     asteroid->base.pos.y -= asteroid->speed * sinf(asteroidRadians) * GetFrameTime();
