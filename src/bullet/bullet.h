@@ -21,5 +21,7 @@ void BulletDespawn(int asteroidIndex);
 
 void MoveBullet(Bullet* bullet);
 
+void BulletDeath(int bulletIndex);
+
 // Clears the pool arrays
 void CleanBulletPool();

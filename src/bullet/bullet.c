@@ -62,3 +62,9 @@ void MoveBullet(Bullet* bullet)
     bullet->base.pos.x -= bullet->speed * cosf(bulletRadians) * GetFrameTime();
     bullet->base.pos.y -= bullet->speed * sinf(bulletRadians) * GetFrameTime();
 }
+
+void BulletDeath(int bulletIndex)
+{
+    bulletPool[bulletIndex].base.pos = bulletPool[bulletIndex].defaultLocation;
+    bulletPool[bulletIndex].base.active = false;
+}
