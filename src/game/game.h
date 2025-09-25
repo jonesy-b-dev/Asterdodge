@@ -10,4 +10,4 @@ int InitGame(GameOptions* options);
 
 int RunGame();
 
-int ShutdownGame();
+int ShutdownGame(bool noRestart);

@@ -105,10 +105,7 @@ int SpawnAsteroids(GameOptions options, Player* player)
                 foundNonActive = true;
                 asteroidPool[i].base.active = true;
                 Vector2 spawnPosition = CalculateSpawnLocation(options);
-                printf("Spawn Location: x: ");
-                printf("%f", spawnPosition.x);
-                printf("\n y: ");
-                printf("%f", spawnPosition.y);
+                printf("Spawn Location: x: %f, y: %f", spawnPosition.x, spawnPosition.y);
 
                 asteroidPool[i].base.pos = spawnPosition;
                 asteroidPool[i].speed = 100;
@@ -117,7 +114,6 @@ int SpawnAsteroids(GameOptions options, Player* player)
                                      player->base.pos.x - asteroidPool[i].base.pos.x);
                 asteroidPool[i].goToPlayer = GetRandomValue(0, 1);
                 printf("\nAsteroid spawned on screen\n");
-                printf("%i\n", asteroidPool[i].goToPlayer);
                 break;
             }
         }

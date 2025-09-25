@@ -102,7 +102,7 @@ int RunGame()
         EndDrawing();
     }
 
-    ShutdownGame();
+    ShutdownGame(true);
     return true;
 }
 
@@ -175,9 +175,25 @@ void RenderUserInterface()
     char scorebuffer[30];
     snprintf(scorebuffer, sizeof(scorebuffer), "Score: %d", player.score);
     DrawText(scorebuffer, m_options.windowWidth - 200, 40, 20, WHITE);
+
+    if (player.isDead)
+    {
+        DrawText("You died :(",
+                 m_options.windowWidth / 2 - 45,
+                 m_options.windowHeight / 2 - 30,
+                 20,
+                 WHITE);
+        DrawText("Press r to restart",
+                 m_options.windowWidth / 2 - 85,
+                 m_options.windowHeight / 2,
+                 20,
+                 WHITE);
+        if (IsKeyDown(KEY_R))
+            ShutdownGame(false);
+    }
 }
 
-int ShutdownGame()
+int ShutdownGame(bool noRestart)
 {
     // cleanup
     UnloadTexture(player.base.sprite);
@@ -186,6 +202,12 @@ int ShutdownGame()
     free(asteroidPool);
     free(bulletPool);
 
-    CloseWindow();
+    if (noRestart)
+    {
+        CloseWindow();
+        return true;
+    }
+    InitGame(&m_options);
+
     return true;
 }
