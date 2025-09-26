@@ -1,6 +1,6 @@
 #pragma once
-#include <entity/entity.h>
-#include <player/player.h>
+#include "../entity/entity.h"
+#include "../player/player.h"
 #include <utils/gameUtils.h>
 
 typedef struct

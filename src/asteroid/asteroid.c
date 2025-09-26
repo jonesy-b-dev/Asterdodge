@@ -82,7 +82,8 @@ int SpawnAsteroids(GameOptions options, Player* player)
     if (difficultyIncreaseTime >= difficultyIncreaseInterval)
     {
         difficultyIncreaseTime = 0;
-        float scale = 0.95f + ((float)GetRandomValue(0, 500) / 10000.0f);
+        float scale = options.startDifficulty + ((float)GetRandomValue(0, 500) / 10000.0f);
+		printf("New difficulty scale: %f \n", scale);
         spawnTimerTarget *= scale;
 
         if (spawnTimerTarget < 0.5f)

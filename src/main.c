@@ -8,7 +8,9 @@ int main()
                            .windowHeight = 600,
                            .windowWidth = 1000,
                            .asteroidPoolSize = 100,
-                           .bulletPoolSize = 100};
+                           .bulletPoolSize = 100,
+                           .startDifficulty = 0.75f,
+						   .difficulty = 100.0f};
     InitGame(&options);
 
     RunGame();

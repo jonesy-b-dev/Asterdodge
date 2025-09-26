@@ -1,3 +1,8 @@
+#include <asteroid/asteroid.h>
+#include <bullet/bullet.h>
+#include <entity/entity.h>
+#include <player/player.h>
+#include <uiElement/uiElement.h>
 #include <game/game.h>
 #include <raylib.h>
 #include <resource_dir.h>

@@ -10,6 +10,8 @@ typedef struct
     const char* resourceDirectory;
     int asteroidPoolSize;
     int bulletPoolSize;
+	float startDifficulty;
+	float difficulty;
 } GameOptions;
 
 float AngleToMouseFromEntity(Entity* entity);

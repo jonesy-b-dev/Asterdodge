@@ -3,6 +3,8 @@
 #include <player/player.h>
 #include <stdio.h>
 
+float shootingCoolDown = 0.5f;
+float shootingTimer = 0;
 void RotatePlayerToMouse(Player* player)
 {
     if (player->isDead)
@@ -13,6 +15,7 @@ void RotatePlayerToMouse(Player* player)
 
 void PlayerMove(Player* player)
 {
+    shootingTimer += GetFrameTime();
     if (player->isDead)
         return;
 
@@ -26,8 +29,12 @@ void PlayerMove(Player* player)
         player->base.pos.y += player->speed * GetFrameTime();
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || IsKeyPressed(KEY_SPACE))
     {
-        ShootBullet(player);
-    }
+		if (shootingTimer >= shootingCoolDown)
+        {
+		    shootingTimer = 0;
+		    ShootBullet(player);
+		}
+	}
 }
 
 void PlayerTakeDamage(Player* player, int damage, UiElement* healthBar)

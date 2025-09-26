@@ -26,10 +26,8 @@ void RenderEntity(Entity* entity, Vector2 scale)
                                  .width = entity->srcRec.width * scale.x,
                                  .height = entity->srcRec.height * scale.y};
 
-    // Wacky fix for collision boxes being offset, hate the solution but it works:(
     if (entity && entity->name)
     {
-        /* Build the collision box using the selected divisor */
         entity->collisionBox =
             (Rectangle){.x = entity->dstRec.x - entity->sprite.width / (2 / scale.x),
                         .y = entity->dstRec.y - entity->sprite.height / (2 / scale.y),
